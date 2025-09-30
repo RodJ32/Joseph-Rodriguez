@@ -1,0 +1,15 @@
+# Java build output
+**/*.class
+/Assignment2/target/
+/Assignment2/bin/
+/Assignment2/build/
+/Assignment2/out/
+
+# IDEs/editors
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Logs
+*.log
