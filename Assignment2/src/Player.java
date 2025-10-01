@@ -8,11 +8,7 @@ public class Player {
         this.head = null;
     }
 
-    public void loadDataFromPlayerData() {
-        PlayerData pd = new PlayerData();
-        this.data = pd.getMyData();
-        System.out.println("Player.loadDataFromPlayerData(): loaded " + (data == null ? 0 : data.length) + " rows.");
-    }
+    public void loadDataFromPlayerData() { PlayerData pd = new PlayerData(); this.data = pd.getMyData(); }
 
     public SeLinkedList addPlayer(int a, int b, int c) {
         SeLinkedList node = new SeLinkedList(numPlayers, a, b, c);
@@ -34,8 +30,7 @@ public class Player {
 
     public SeLinkedList findMaxWeight() {
         if (head == null) return null;
-        SeLinkedList max = head;
-        int maxW = head.weight();
+        SeLinkedList max = head; int maxW = head.weight();
         for (SeLinkedList cur = head.next; cur != null; cur = cur.next) {
             int w = cur.weight();
             if (w > maxW) { max = cur; maxW = w; }
@@ -46,13 +41,25 @@ public class Player {
 
     public SeLinkedList findMinWeight() {
         if (head == null) return null;
-        SeLinkedList min = head;
-        int minW = head.weight();
+        SeLinkedList min = head; int minW = head.weight();
         for (SeLinkedList cur = head.next; cur != null; cur = cur.next) {
             int w = cur.weight();
             if (w < minW) { min = cur; minW = w; }
         }
         System.out.println("Min weight player >> " + min + " and its weight=" + minW);
         return min;
+    }
+
+    public SeLinkedList[] findMinMaxWeight() {
+        if (head == null) return new SeLinkedList[] { null, null };
+        SeLinkedList min = head, max = head;
+        int minW = head.weight(), maxW = head.weight();
+        for (SeLinkedList cur = head.next; cur != null; cur = cur.next) {
+            int w = cur.weight();
+            if (w < minW) { min = cur; minW = w; }
+            if (w > maxW) { max = cur; maxW = w; }
+        }
+        System.out.println("findMinMaxWeight(): min=" + min + " (" + minW + "), max=" + max + " (" + maxW + ")");
+        return new SeLinkedList[] { min, max };
     }
 }
