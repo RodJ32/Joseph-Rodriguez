@@ -14,18 +14,6 @@ public class Player {
         System.out.println("Player.loadDataFromPlayerData(): loaded " + (data == null ? 0 : data.length) + " rows.");
     }
 
-    public void printArraySnapshot() {
-        if (data == null) {
-            System.out.println("No data loaded.");
-            return;
-        }
-        System.out.println("Data snapshot (first up to 3 rows):");
-        for (int i = 0; i < data.length && i < 3; i++) {
-            int[] t = data[i];
-            System.out.println("  [" + i + "] a=" + t[0] + " b=" + t[1] + " c=" + t[2]);
-        }
-    }
-
     public SeLinkedList addPlayer(int a, int b, int c) {
         SeLinkedList node = new SeLinkedList(numPlayers, a, b, c);
         if (head == null) head = node;
@@ -35,34 +23,36 @@ public class Player {
             cur.next = node;
         }
         numPlayers++;
-        System.out.println("addPlayer(): added " + node + " weight=" + node.weight());
         return node;
     }
 
     public void initializeList() {
         if (this.data == null) loadDataFromPlayerData();
-        if (this.data == null) {
-            System.out.println("initializeList(): no data");
-            return;
-        }
+        if (this.data == null) return;
         for (int[] row : data) addPlayer(row[0], row[1], row[2]);
-        System.out.println("initializeList(): finished, numPlayers=" + numPlayers);
     }
 
     public SeLinkedList findMaxWeight() {
-        if (head == null) {
-            System.out.println("findMaxWeight(): list empty");
-            return null;
-        }
+        if (head == null) return null;
         SeLinkedList max = head;
         int maxW = head.weight();
-        SeLinkedList cur = head.next;
-        while (cur != null) {
+        for (SeLinkedList cur = head.next; cur != null; cur = cur.next) {
             int w = cur.weight();
             if (w > maxW) { max = cur; maxW = w; }
-            cur = cur.next;
         }
         System.out.println("Max weight player >> " + max + " and its weight=" + maxW);
         return max;
+    }
+
+    public SeLinkedList findMinWeight() {
+        if (head == null) return null;
+        SeLinkedList min = head;
+        int minW = head.weight();
+        for (SeLinkedList cur = head.next; cur != null; cur = cur.next) {
+            int w = cur.weight();
+            if (w < minW) { min = cur; minW = w; }
+        }
+        System.out.println("Min weight player >> " + min + " and its weight=" + minW);
+        return min;
     }
 }
