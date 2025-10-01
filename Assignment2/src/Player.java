@@ -8,15 +8,25 @@ public class Player {
         this.head = null;
     }
 
+<<<<<<< HEAD
     public void loadDataFromPlayerData() { PlayerData pd = new PlayerData(); this.data = pd.getMyData(); }
+=======
+    public void loadDataFromPlayerData() {
+        PlayerData pd = new PlayerData();
+        this.data = pd.getMyData();
+        System.out.println("Player.loadDataFromPlayerData(): loaded " + (data == null ? 0 : data.length) + " rows.");
+    }
+>>>>>>> doubleLink
 
     public SeLinkedList addPlayer(int a, int b, int c) {
         SeLinkedList node = new SeLinkedList(numPlayers, a, b, c);
-        if (head == null) head = node;
-        else {
+        if (head == null) {
+            head = node;
+        } else {
             SeLinkedList cur = head;
             while (cur.next != null) cur = cur.next;
             cur.next = node;
+            node.prev = cur;
         }
         numPlayers++;
         return node;
@@ -39,6 +49,7 @@ public class Player {
         return max;
     }
 
+<<<<<<< HEAD
     public SeLinkedList findMinWeight() {
         if (head == null) return null;
         SeLinkedList min = head; int minW = head.weight();
@@ -61,5 +72,30 @@ public class Player {
         }
         System.out.println("findMinMaxWeight(): min=" + min + " (" + minW + "), max=" + max + " (" + maxW + ")");
         return new SeLinkedList[] { min, max };
+=======
+    public void removeNode(SeLinkedList node) {
+        if (node == null) return;
+
+        SeLinkedList prev = node.prev;
+        SeLinkedList next = node.next;
+
+        if (prev == null) {
+            // first node
+            head = next;
+            if (next != null) next.prev = null;
+        } else if (next == null) {
+            // last node
+            prev.next = null;
+        } else {
+            // middle node
+            prev.next = next;
+            next.prev = prev;
+        }
+
+        node.prev = null;
+        node.next = null;
+
+        System.out.println("removeNode(): removed " + node + " (weight=" + node.weight() + ")");
+>>>>>>> doubleLink
     }
 }
