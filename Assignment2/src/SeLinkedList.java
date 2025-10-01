@@ -1,4 +1,5 @@
 public class SeLinkedList {
+    public SeLinkedList prev;
     public SeLinkedList next;
     public int a, b, c;
     public int index;
