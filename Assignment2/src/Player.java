@@ -24,7 +24,6 @@ public class Player {
             cur.next = node;
             node.prev = cur;
         }
-
         numPlayers++;
         System.out.println("addPlayer(): added " + node + " weight=" + node.weight());
         return node;
@@ -55,5 +54,30 @@ public class Player {
         }
         System.out.println("Max weight player >> " + max + " and its weight=" + maxW);
         return max;
+    }
+
+    public void removeNode(SeLinkedList node) {
+        if (node == null) return;
+
+        SeLinkedList prev = node.prev;
+        SeLinkedList next = node.next;
+
+        if (prev == null) {
+            // first node
+            head = next;
+            if (next != null) next.prev = null;
+        } else if (next == null) {
+            // last node
+            prev.next = null;
+        } else {
+            // middle node
+            prev.next = next;
+            next.prev = prev;
+        }
+
+        node.prev = null;
+        node.next = null;
+
+        System.out.println("removeNode(): removed " + node + " (weight=" + node.weight() + ")");
     }
 }
