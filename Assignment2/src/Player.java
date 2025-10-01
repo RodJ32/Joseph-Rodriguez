@@ -13,6 +13,7 @@ public class Player {
         this.data = pd.getMyData();
         System.out.println("Player.loadDataFromPlayerData(): loaded " + (data == null ? 0 : data.length) + " rows.");
     }
+
     public void printArraySnapshot() {
         if (data == null) {
             System.out.println("No data loaded.");
@@ -27,9 +28,8 @@ public class Player {
 
     public SeLinkedList addPlayer(int a, int b, int c) {
         SeLinkedList node = new SeLinkedList(a, b, c);
-        if (head == null) {
-            head = node;
-        } else {
+        if (head == null) head = node;
+        else {
             SeLinkedList cur = head;
             while (cur.next != null) cur = cur.next;
             cur.next = node;
@@ -37,5 +37,17 @@ public class Player {
         numPlayers++;
         System.out.println("addPlayer(): added " + node);
         return node;
+    }
+
+    public void initializeList() {
+        if (this.data == null) loadDataFromPlayerData();
+        if (this.data == null) {
+            System.out.println("initializeList(): no data");
+            return;
+        }
+        for (int[] row : data) {
+            addPlayer(row[0], row[1], row[2]);
+        }
+        System.out.println("initializeList(): finished, numPlayers=" + numPlayers);
     }
 }
